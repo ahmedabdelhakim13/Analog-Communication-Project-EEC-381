@@ -27,7 +27,7 @@ timeVector = linspace(startTime, endTime, length(filteredSignal));
 timeVector = timeVector';
 
 carrier = generateCarrier(carrierFreq, carrierAmp, timeVector);
-DSB_SC = supprassedCarrier(carrier, filteredSignal, f_S);
+DSB_SC = suppressedCarrier(carrier, filteredSignal, f_S);
 %% Double-Side-Band-Transmitted-Carrier
 modIndex = 0.5;
 DSB_TC = transmittedCarrier(carrier, filteredSignal, modIndex, f_S);
