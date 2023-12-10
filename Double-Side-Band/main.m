@@ -13,7 +13,7 @@ timeVector = timeVector';
 figure;
 plot(timeVector, filteredSignal);
 title('Filtered Signal in Time Domain');
-sound(abs(filteredSignal));
+sound(abs(filteredSignal),f_S);
 %% Double-Side-Band-Suppressed-Carrier
 carrierFreq = 100000;
 amplitude = max(filteredSignal);
