@@ -16,6 +16,8 @@ title('Filtered Signal in Time Domain');
 sound(abs(filteredSignal));
 %% Double-Side-Band-Suppressed-Carrier
 carrierFreq = 100000;
+amplitude = max(filteredSignal);
+modIndex = 0.5;
 carrierAmp = amplitude / modIndex;
 
 filteredSignal = resample(filteredSignal, 5 * carrierFreq, f_S);
@@ -29,7 +31,6 @@ timeVector = timeVector';
 carrier = generateCarrier(carrierFreq, carrierAmp, timeVector);
 DSB_SC = suppressedCarrier(carrier, filteredSignal, f_S);
 %% Double-Side-Band-Transmitted-Carrier
-modIndex = 0.5;
 DSB_TC = transmittedCarrier(carrier, filteredSignal, modIndex, f_S);
 %% Envelope Detection DSB-SC
 envelopeDetection(DSB_SC, timeVector, f_S);
