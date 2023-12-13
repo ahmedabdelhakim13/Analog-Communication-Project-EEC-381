@@ -1,0 +1,9 @@
+clear all;
+clc;
+%% Reading the Signal
+Fs=48000;                           %defining the frequency of the signal
+T=1/Fs;                              %defining the periodic time for the signal
+[y,Fs] = audioread('eric.wav');
+
+%%plot(abs(fft(y)),Fs); %plot  %subplot %xlabel %ylabel %title %sound(y,Fs);
+
