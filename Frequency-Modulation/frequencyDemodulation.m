@@ -16,6 +16,7 @@ function frequencyDemodulation(modSignal, f_Sampling, timeVector)
     figure;
     plot(timeVector, envelope);
     title("Demodulated Signal");
+    ylim([-2*10^-4 2*10^-4]);
     
     % Resample the envelope and play the audio
     envelope = resample(envelope, f_Sampling / 5, f_Sampling);
