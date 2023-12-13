@@ -14,7 +14,7 @@ function envelopeDetection(signal, time, f_Sampling)
     hold on;
     plot(time, -signalEnvelope, '-r', time, signalEnvelope, '-r', 'Linewidth', 1.5); % Plot the envelope
     hold off;
-    title('Envelope Of Double Side Band Suppressed Carrier'); % Set the title for the plot
+    title('Envelope Of Double Side Band'); % Set the title for the plot
 
     % Resample the signal envelope and play the audio
     signalEnvelope = resample(abs(signalEnvelope), f_Sampling / 5, f_Sampling);
