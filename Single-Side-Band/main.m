@@ -10,15 +10,16 @@ T=1/Fs;                              %defining the periodic time for the signal
 t=linspace(0,length(y)/Fs,length(y));
 figure;
 %subplot(1,2,1);
-%plot(t,y);
-%title('time domain');
-%xlabel('time');
-%ylabel('Amplitude');
-%frequency domain
+plot(t,y);
+title('time domain');
+xlabel('time');
+ylabel('Amplitude');
+%%frequency domain
 nfft = length(y);
 f=linspace(0,Fs,nfft);
 Y=abs(fftshift(fft(y,nfft)));
 %%subplot(1,2,2);
+figure;
 plot(f,Y);
 title('frequency domain');
 xlabel('frequency');
@@ -31,4 +32,14 @@ plot(Y);
 title('frequency filtered domain');
 xlabel('frequency');
 ylabel('Amplitude');
+%%
+s2=ifftshift(ifftshift(z,length(z)));
+t2=linspace(0,length(s2)/Fs,length(y));
+%%t2=linspace(0,length(s2)/4000,length(s2));
+figure;
+plot(t2,s2);
+title(' filtered signal in time domain');
+xlabel('time');
+ylabel('Amplitude');
+%%
 %plot(abs(fft(y)),Fs); %plot  %subplot %xlabel %ylabel %title %sound(y,Fs);
