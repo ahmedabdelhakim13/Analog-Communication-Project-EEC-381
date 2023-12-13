@@ -31,4 +31,13 @@ plot(Y);
 title('frequency filtered domain');
 xlabel('frequency');
 ylabel('Amplitude');
+%%
+s2=ifftshift(ifftshift(z,length(z)));
+t2=linspace(0,length(s2)/4000,length(s2));
+figure;
+plot(t2,s2);
+title(' filtered signal in time domain');
+xlabel('time');
+ylabel('Amplitude');
+%%
 %plot(abs(fft(y)),Fs); %plot  %subplot %xlabel %ylabel %title %sound(y,Fs);
