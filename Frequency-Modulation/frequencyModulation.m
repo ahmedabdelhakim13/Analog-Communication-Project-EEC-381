@@ -14,11 +14,11 @@ function [modSignal, timeVector] = frequencyModulation(kf, carrierFreq, carrierA
     timeVector = timeVector';
 
     % Perform Frequency Modulation (FM) on the input signal to generate the modulated signal
-    modSignal = carrierAmp * cos(2 * pi * carrierFreq * timeVector + 2 * pi * kf * cumsum(signal) / f_Sampling);
+    modSignal = carrierAmp * cos(2 * pi * carrierFreq * timeVector + 2 * pi * kf * cumsum(signal) ./ f_Sampling);
 
     % Compute the Fourier transform of the input signal
-    len = length(signal);
-    S_Freq = fftshift(fft(signal));
+    len = length(modSignal);
+    S_Freq = fftshift(fft(modSignal));
     freq = f_Sampling / 2 * linspace(-1, 1, len);
 
     % Plot the spectrum of the frequency-modulated signal
