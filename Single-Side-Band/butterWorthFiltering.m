@@ -28,7 +28,7 @@ function butterWorthFiltering(cutoffFreq, f_S, signal, carrierFreq, timeVector)
     
     % Plot the demodulated signal in the frequency domain
     figure;
-    plot(freq, S_freq);
+    plot(freq, abs(S_freq));
     title('Demodulated Signal in Frequency Domain Using Butterworth filter');
     
     % Resample the signal and play the sound
