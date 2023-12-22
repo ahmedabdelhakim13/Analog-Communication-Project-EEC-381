@@ -23,6 +23,6 @@ function [modSignal, timeVector] = frequencyModulation(kf, carrierFreq, carrierA
 
     % Plot the spectrum of the frequency-modulated signal
     figure;
-    plot(freq, S_Freq);
+    plot(freq, abs(S_Freq));
     title('Spectrum of Frequency Modulated Signal');
 end

@@ -23,6 +23,6 @@ function SSB_LSB = singleSideBand(DSB_SC, f_Sampling, carrierFreq)
     
     % Plot the magnitude of the frequency domain representation
     figure;
-    plot(freq, abs(S_freq)/len);
+    plot(freq, abs(S_freq));
     title('Single Side Band in frequency Domain');
 end

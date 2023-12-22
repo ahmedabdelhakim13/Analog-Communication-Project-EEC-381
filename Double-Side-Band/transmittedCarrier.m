@@ -21,6 +21,6 @@ function DSB_TC = transmittedCarrier(carrier, signal, modIndex, f_Sampling)
 
     % Plot the frequency spectrum of the DSB-TC signal
     figure;
-    plot(freq, abs(DSB_TC_Freq) / len);
+    plot(freq, abs(DSB_TC_Freq));
     title('Double Side Band Transmitted Carrier'); % Set the title for the plot
 end

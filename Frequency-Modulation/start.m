@@ -15,6 +15,6 @@ function [signal, f_Sampling, S_freq, freq] = start(filename)
 
     % Plot the spectrum of the signal
     figure;
-    plot(freq, abs(S_freq) / len);
+    plot(freq, abs(S_freq));
     title('Signal Spectrum'); % Set the title for the plot
 end

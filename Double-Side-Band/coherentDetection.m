@@ -25,7 +25,7 @@ function coherentDetection(dB, signal, carrierFreq, time, cutoffFreq, f_Sampling
 
     % Plot the frequency spectrum
     figure;
-    plot(freq, abs(demodSignalFreq) / len);
+    plot(freq, abs(demodSignalFreq));
 
     % Set title based on the presence of frequency or phase error
     if (carrierFreq ~= 100000)

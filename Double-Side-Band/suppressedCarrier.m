@@ -17,6 +17,6 @@ function DSB_SC = suppressedCarrier(carrier, signal, f_Sampling)
 
     % Plot the frequency spectrum of the DSB-SC signal
     figure;
-    plot(freq, abs(DSB_SC_Freq) / len);
+    plot(freq, abs(DSB_SC_Freq));
     title('Double Side Band Suppressed Carrier'); % Set the title for the plot
 end

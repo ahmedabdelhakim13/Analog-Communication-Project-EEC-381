@@ -21,6 +21,6 @@ function filteredSignal = filtering(cutoffFreq, S_freq, freq, f_Sampling)
 
     % Plot the frequency spectrum of the filtered signal
     figure;
-    plot(freq, abs(S_freq) / len);
+    plot(freq, abs(S_freq));
     title('Filtered Signal Spectrum'); % Set the title for the plot
 end
