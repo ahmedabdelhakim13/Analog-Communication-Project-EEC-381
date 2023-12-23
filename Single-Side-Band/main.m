@@ -36,6 +36,18 @@ DSB_SC = suppressedCarrier(carrier, filteredSignal, f_S);
 SSB_LSB = singleSideBand(DSB_SC, f_S, carrierFreq);
 %% Demodulating
 singleSideBandDemodulation(SSB_LSB, carrierFreq, timeVector, f_S, cutoffFreq);
+%% Generating Single-Side-Band-LSB Using Butterworth Filter
+[b, a] = butter(4, carrierFreq * 2/f_S);
+modIndex = 0.5;
+SSB_LSB_BW = filtfilt(b, a, DSB_SC/modIndex);
+len = length(SSB_LSB_BW);
+freq = f_S/2 * linspace(-1, 1, len);
+S_freq = fftshift(fft(SSB_LSB_BW));
+    
+    % Plot the demodulated signal in the frequency domain
+figure;
+plot(freq, abs(S_freq));
+title("SSB-LSB in Frequency Domain Using 4th Order Butterworth Filter");
 %% ButterWorth Filter
 butterWorthFiltering(cutoffFreq, f_S, SSB_LSB, carrierFreq, timeVector);
 %% Coherent Detection With SNR = 0 dB
