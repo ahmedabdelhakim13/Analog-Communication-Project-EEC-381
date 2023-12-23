@@ -11,6 +11,14 @@ function frequencyDemodulation(modSignal, f_Sampling, timeVector)
     
     % Obtain the envelope of the demodulated signal using the Hilbert transform
     envelope = abs(hilbert(demodSignal)) - mean(abs(hilbert(demodSignal))); % Extract envelope
+   
+    % Plot the spectrum of the frequency-demodulated signal
+    S_Freq = fftshift(fft(demodSignal));
+    len = length(demodSignal);
+    freq = f_Sampling / 2 * linspace(-1, 1, len);
+    figure;
+    plot(freq, abs(S_Freq));
+    title('Spectrum of Frequency Demodulated Signal');
     
     % Plot the demodulated signal envelope over time
     figure;
