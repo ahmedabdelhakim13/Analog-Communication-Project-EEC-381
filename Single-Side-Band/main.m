@@ -41,8 +41,7 @@ normalization = f_S/2;
 fc1 = (carrierFreq - cutoffFreq)/normalization;
 fc2 = carrierFreq/normalization;
 [b, a] = butter(4,[fc1 fc2]);
-modIndex = 0.5;
-SSB_LSB_BW = filtfilt(b, a, DSB_SC/modIndex);
+SSB_LSB_BW = filtfilt(b, a, DSB_SC);
 len = length(SSB_LSB_BW);
 freq = f_S/2 * linspace(-1, 1, len);
 S_freq = fftshift(fft(SSB_LSB_BW));
@@ -52,7 +51,7 @@ figure;
 plot(freq, abs(S_freq));
 title("SSB-LSB in Frequency Domain Using 4th Order Butterworth Filter");
 %% ButterWorth Filter
-butterWorthFiltering(cutoffFreq, f_S, SSB_LSB, carrierFreq, timeVector);
+butterWorthFiltering(cutoffFreq, f_S, SSB_LSB_BW, carrierFreq, timeVector);
 %% Coherent Detection With SNR = 0 dB
 dB = 0;
 phase = 0;
