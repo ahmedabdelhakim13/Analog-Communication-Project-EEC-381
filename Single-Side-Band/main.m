@@ -55,6 +55,6 @@ S_freq = fftshift(fft(SSBTC));
 freq = f_S/2 * linspace(-1, 1, len);
 
 figure;
-plot(freq, abs(S_freq)/len);
+plot(freq, abs(S_freq));
 title('SSBTC in Frequency Domain');
 envelopeDetection(SSBTC, timeVector, f_S);
