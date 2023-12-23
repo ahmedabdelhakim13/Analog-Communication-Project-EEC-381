@@ -11,9 +11,10 @@ function coherentDetection(dB, signal, carrierFreq, time, cutoffFreq, f_Sampling
 
     % Add white Gaussian noise to the input signal based on given SNR
     snr_dB = awgn(signal, dB);
-
+    amp = max(signal);
+    modIndex = 0.5;
     % Demodulate the signal using coherent detection
-    demodSignal = snr_dB .* cos(2 * pi * carrierFreq * time + phase);
+    demodSignal = snr_dB/modIndex .* cos(2 * pi * carrierFreq * time + phase);
 
     % Compute the frequency spectrum of the demodulated signal
     demodSignalFreq = fftshift(fft(demodSignal));

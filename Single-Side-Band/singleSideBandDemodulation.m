@@ -6,9 +6,10 @@ function singleSideBandDemodulation(SSB, carrierFreq, timeVector, f_S, cutoffFre
     %   timeVector: Time vector corresponding to the signal.
     %   f_S: Sampling frequency of the signal.
     %   cutoffFreq: Cutoff frequency used for demodulation.
-
+  
+    modIndex = 0.5;
     % Demodulate the SSB signal
-    demodSignal = SSB .* cos(2 * pi * carrierFreq * timeVector);
+    demodSignal = SSB/modIndex .* cos(2 * pi * carrierFreq * timeVector);
     
     % Calculate length and frequency vectors
     len = length(SSB);

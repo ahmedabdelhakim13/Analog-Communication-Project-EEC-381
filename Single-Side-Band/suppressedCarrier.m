@@ -4,9 +4,10 @@ function DSB_SC = suppressedCarrier(carrier, signal, f_Sampling)
     %   carrier: Carrier signal
     %   signal: Input signal
     %   f_Sampling: Sampling frequency in Hz
-
+    amp = max(signal);
+    modIndex = 0.5;
     % Generate the DSB-SC signal by modulating the input signal with the carrier
-    DSB_SC = signal .* carrier;
+    DSB_SC = modIndex * signal/amp .* carrier;
 
     % Compute the length of the DSB-SC signal
     len = length(DSB_SC);

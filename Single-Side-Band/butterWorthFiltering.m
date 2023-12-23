@@ -9,9 +9,9 @@ function butterWorthFiltering(cutoffFreq, f_S, signal, carrierFreq, timeVector)
     
     % Design the Butterworth filter
     [b, a] = butter(4, cutoffFreq * 2/f_S);
-    
+    modIndex = 0.5;
     % Demodulate the signal
-    demodSignal = signal .* cos(2 * pi * carrierFreq * timeVector);
+    demodSignal = signal/modIndex .* cos(2 * pi * carrierFreq * timeVector);
     
     % Apply the Butterworth filter using filtfilt
     demodSignal = filtfilt(b, a, demodSignal);
