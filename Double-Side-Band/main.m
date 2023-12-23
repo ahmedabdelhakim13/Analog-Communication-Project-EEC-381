@@ -51,9 +51,11 @@ carrierFreq = 100100;
 dB = 0;
 coherentDetection(dB, DSB_SC, carrierFreq, timeVector, cutoffFreq, f_S, phase); 
 %% Coherent Detection With Frequency Error and SNR = 10 dB
+carrierFreq = 100100;
 dB = 10;
 coherentDetection(dB, DSB_SC, carrierFreq, timeVector, cutoffFreq, f_S, phase); 
 %% Coherent Detection With Frequency Error and SNR = 30 dB
+carrierFreq = 100100;
 dB = 30;
 coherentDetection(dB, DSB_SC, carrierFreq, timeVector, cutoffFreq, f_S, phase); 
 %% Coherent Detection With Phase Error and SNR = 0 dB
