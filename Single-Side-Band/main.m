@@ -37,7 +37,10 @@ SSB_LSB = singleSideBand(DSB_SC, f_S, carrierFreq);
 %% Demodulating
 singleSideBandDemodulation(SSB_LSB, carrierFreq, timeVector, f_S, cutoffFreq);
 %% Generating Single-Side-Band-LSB Using Butterworth Filter
-[b, a] = butter(4, carrierFreq * 2/f_S);
+normalization = f_S/2;
+fc1 = (carrierFreq - cutoffFreq)/normalization;
+fc2 = carrierFreq/normalization;
+[b, a] = butter(4,[fc1 fc2]);
 modIndex = 0.5;
 SSB_LSB_BW = filtfilt(b, a, DSB_SC/modIndex);
 len = length(SSB_LSB_BW);
