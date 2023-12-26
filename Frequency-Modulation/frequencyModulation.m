@@ -1,28 +1,43 @@
-function [modSignal, timeVector] = frequencyModulation(kf, carrierFreq, carrierAmp, signal, f_Sampling)
-    % frequencyModulation performs frequency modulation on an input signal
-    % Inputs:
-    %   kf: Frequency deviation constant (modulation index)
-    %   carrierFreq: Carrier frequency of the modulation
-    %   carrierAmp: Amplitude of the carrier signal
-    %   signal: Input signal to be modulated
-    %   f_Sampling: Sampling frequency of the signal
+% Function to perform Frequency Modulation (FM)
+% Inputs:
+%   - signal: Input signal to be frequency modulated
+%   - carrierFreq: Carrier frequency for modulation
+%   - f_Sampling: Sampling frequency
+%   - Kf: Frequency modulation factor
+%   - A: Amplitude of the modulated signal
+% Outputs:
+%   - modSignal: Frequency modulated signal
+%   - freq: Frequency axis of the modulated signal spectrum
+%   - modFactor: Modulation factor used
+function [modSignal, freq, modFactor] = frequencyModulation(signal, carrierFreq, f_Sampling, Kf, A)
 
-    % Generate the time vector corresponding to the signal
-    startTime = 0;
-    endTime = startTime + length(signal) / f_Sampling;
-    timeVector = linspace(startTime, endTime, length(signal));
-    timeVector = timeVector';
+% Adjust the sampling frequency to be 5 times the carrier frequency
+f_Sampling = 5 * carrierFreq;
 
-    % Perform Frequency Modulation (FM) on the input signal to generate the modulated signal
-    modSignal = carrierAmp * cos(2 * pi * carrierFreq * timeVector + 2 * pi * kf * cumsum(signal) ./ f_Sampling);
+% Resample the signal to the new sampling frequency
+signal = resample(signal, f_Sampling, f_Sampling / 5);
 
-    % Compute the Fourier transform of the input signal
-    len = length(modSignal);
-    S_Freq = fftshift(fft(modSignal));
-    freq = f_Sampling / 2 * linspace(-1, 1, len);
+% Generate a time vector based on the new sampling frequency
+startTime = 0;
+endTime = startTime + length(signal) / f_Sampling;
+timeVector = linspace(startTime, endTime, length(signal));
+timeVector = timeVector';
 
-    % Plot the spectrum of the frequency-modulated signal
-    figure;
-    plot(freq, abs(S_Freq));
-    title('Spectrum of Frequency Modulated Signal');
+% Calculate the modulation factor
+modFactor = Kf * max(signal);
+
+% Perform frequency modulation
+modSignal = A .* cos(2 * pi * carrierFreq * timeVector) - (Kf .* cumsum(signal) .* sin(2 * pi * carrierFreq * timeVector));
+
+% Calculate the spectrum of the modulated signal
+S_Freq = fftshift(fft(real(modSignal)));
+
+% Generate the frequency axis for the spectrum
+freq = linspace(-f_Sampling / 2, f_Sampling / 2, length(S_Freq));
+
+% Plot the spectrum of the frequency modulated signal
+figure;
+plot(freq, abs(S_Freq));
+title("Spectrum of Frequency Modulated Signal");
+
 end

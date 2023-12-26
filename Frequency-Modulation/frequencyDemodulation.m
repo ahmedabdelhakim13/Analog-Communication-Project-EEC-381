@@ -1,33 +1,56 @@
-function frequencyDemodulation(modSignal, f_Sampling, timeVector)
+function frequencyDemodulation(modSignal, f_Sampling, modFactor)
     % frequencyDemodulation performs frequency demodulation on a modulated signal
     % Inputs:
     %   modSignal: Modulated signal to be demodulated
-    %   f_Sampling: Sampling frequency of the signal
-    %   timeVector: Time vector corresponding to the signal
+    %   f_Sampling: Sampling frequency of the modulated signal
+    %   modFactor: Modulation factor used in the modulation process
 
-    % Compute the derivative of the modulated signal to demodulate
-    demodSignal = diff(modSignal);
-    demodSignal = [0; demodSignal]; % Compensate for length difference due to diff function
+    % Calculate the envelope of the modulated signal using the Hilbert transform
+    envelope = abs(hilbert(modSignal)) - mean(abs(hilbert(modSignal)));
+
+    % Demodulate the signal by computing its derivative
+    demodSignal = zeros(length(modSignal), 1);
+    demodSignal(2:end) = diff(envelope);
+
+    % Resample the demodulated signal to the original sampling frequency
+    demodSignal = resample(demodSignal, f_Sampling / 5, f_Sampling);
     
-    % Obtain the envelope of the demodulated signal using the Hilbert transform
-    envelope = abs(hilbert(demodSignal)) - mean(abs(hilbert(demodSignal))); % Extract envelope
-   
-    % Plot the spectrum of the frequency-demodulated signal
+    % Normalize the demodulated signal by the modulation factor
+    demodSignal = demodSignal / modFactor;
+
+    % Compute and plot the spectrum of the demodulated signal
     S_Freq = fftshift(fft(demodSignal));
     len = length(demodSignal);
     freq = f_Sampling / 2 * linspace(-1, 1, len);
     figure;
     plot(freq, abs(S_Freq));
     title('Spectrum of Frequency Demodulated Signal');
-    
-    % Plot the demodulated signal envelope over time
+
+    % Apply frequency filtering to remove high-frequency components
+    S_Freq(freq >= 4000 | freq <= -4000) = 0;
+    demodSignal = ifft(ifftshift(S_Freq));
+
+    % Compute and plot the spectrum of the filtered demodulated signal
+    len = length(demodSignal);
+    S_Freq = fftshift(fft(demodSignal));
+    freq = f_Sampling / 2 * linspace(-1, 1, len);
     figure;
-    plot(timeVector, envelope);
-    title("Demodulated Signal");
-    ylim([-2*10^-4 2*10^-4]);
-    
-    % Resample the envelope and play the audio
-    envelope = resample(envelope, f_Sampling / 5, f_Sampling);
-    % Scale and play the envelope (500 is an arbitrary scaling factor for audio perception)
-    sound(500 .* abs(envelope), f_Sampling/5);
+    plot(freq, abs(S_Freq));
+    title('Spectrum of Filtered Frequency Demodulated Signal');
+
+    % Generate a time vector corresponding to the demodulated signal
+    startTime = 0;
+    endTime = startTime + length(demodSignal) / f_Sampling;
+    timeVector = linspace(startTime, endTime, length(demodSignal));
+    timeVector = timeVector';
+
+    % Plot the demodulated signal in the time domain
+    figure;
+    plot(timeVector, demodSignal);
+    title("Demodulated Signal in Time Domain");
+    ylim([-2 2]);
+    xlim([0 8]);
+
+    % Play the audio of the demodulated signal (envelope)
+    sound(abs(demodSignal), f_Sampling);
 end
