@@ -27,7 +27,7 @@ timeVector = timeVector';
 modFactor = Kf * max(signal);
 
 % Perform frequency modulation
-modSignal = A .* cos(2 * pi * carrierFreq * timeVector) - (Kf .* cumsum(signal) .* sin(2 * pi * carrierFreq * timeVector));
+modSignal = A .* cos(2 * pi * carrierFreq * timeVector) - A .* (Kf .* cumsum(signal) .* sin(2 * pi * carrierFreq * timeVector));
 
 % Calculate the spectrum of the modulated signal
 S_Freq = fftshift(fft(real(modSignal)));
